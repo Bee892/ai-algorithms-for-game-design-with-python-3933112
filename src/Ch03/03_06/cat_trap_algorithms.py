@@ -16,6 +16,7 @@ import random
 import copy
 import time
 import numpy as np
+import math
 
 # Constants
 CAT_TILE = 6
@@ -40,6 +41,7 @@ class CatTrapGame:
     
     def __init__(self, size):
         self.cat = [size // 2] * 2
+        self.cat_start = [size // 2] * 2
         self.hexgrid = np.full((size, size), EMPTY_TILE)
         self.hexgrid[tuple(self.cat)] = CAT_TILE
         CatTrapGame.size = size
@@ -229,8 +231,6 @@ class CatTrapGame:
            solution in the next folder to unblock yourself without spoiling too
            much of the fun.
         """
-        # TODO: Remove the following line to enable your evaluation function.
-        return 2 if cat_turn else 1
 
         # Skeleton Code - Custom Evaluation Function
         # HINT: Below is a guide to help you implement your own evaluation
@@ -239,26 +239,14 @@ class CatTrapGame:
 
         # Initialize a score variable
         score = 0
-
-        # TODO: Count the number of valid moves for the cat.
-        # HINT: Use `self.get_cat_moves()` to get the list of moves.
-        #       Or use the existing eval_moves() method above.
-        move_score = 0  # Replace 0 with the number of valid moves.
-
-        # TODO: Evaluate the proximity of the cat to the board's edge.
-        # HINT: Use `self.cat` to calculate the distance.
-        #       Or use the existing eval_straight_exit() method above.
-        proximity_score = 0  # Replace 0 with your calculation logic.
-
-        # TODO: Incorporate penalties or rewards for specific conditions.
-        # Example: Penalize if the cat is not making progress or if it's
-        #          not the cat's turn.
-        penalty = 0  # Replace with logic for penalties.
+        move_score = self.eval_moves(cat_turn)
+        proximity_score = self.eval_straight_exit(cat_turn)
+        penalty = self.size - math.sqrt(((self.cat[0] - self.cat_start[0])**2) + ((self.cat[1] - self.cat_start[1])**2))
 
         # TODO: Combine all the metrics into the final score.
         # Example: score = move_score + proximity_score - penalty
         # Modify this as you prefer.
-        score = move_score + proximity_score - penalty
+        score = move_score + (proximity_score*2) - penalty
 
         return score
 
