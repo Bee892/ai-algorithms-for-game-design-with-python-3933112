@@ -304,9 +304,6 @@ class CatTrapGame:
            solution in the next folder to unblock yourself without spoiling too
            much of the fun.
         """
-        # TODO: Remove the following 2 lines to enable your alpha-beta implementation.
-        self.placeholder_warning()
-        return self.random_cat_move(), 0
 
         # Skeleton Code - Alpha-Beta Pruning
         # HINT: There are only 2 "TODO:" comments below.
@@ -335,10 +332,11 @@ class CatTrapGame:
             if value > best_value:
                 best_value = value
                 best_move = move
-
-            # TODO: Write the alpha-beta updating code.
-            # HINT: Look at steps 6 and 7 of the algorithm in the 
-            #       alpha-beta search algorithm video.
+            
+            if best_value >= beta:
+                return best_move, best_value
+            
+            alpha = max(alpha, best_value)
 
         return best_move, best_value
 
@@ -378,9 +376,11 @@ class CatTrapGame:
                 return 0
             
             best_value = min(best_value, value)
-            # TODO: Write the alpha-beta updating code.
-            # HINT: Look at steps 6 and 7 of the algorithm in the 
-            #       alpha-beta search algorithm video.
+            
+            if best_value <= alpha:
+                return best_value
+            
+            beta = min(beta, best_value)
 
         return best_value
 
