@@ -498,10 +498,6 @@ class CatTrapGame:
            solution in the next folder to unblock yourself without spoiling too
            much of the fun.
         """
-        # TODO: Remove the following 2 lines to enable your iterative deepening 
-        #       implementation.
-        self.placeholder_warning()
-        return self.random_cat_move()
 
         # Skeleton Code - Iterative Deepening
         best_depth = 0
@@ -510,40 +506,27 @@ class CatTrapGame:
         max_turns = 2 * (CatTrapGame.size ** 2)
         for depth in range(1, max_turns):
             CatTrapGame.reached_max_depth = False
-            
-            # TODO: Use the chosen algorithm (Alpha-Beta or Minimax) to compute 
-            #       the best move with a limited depth.
-            # HINT: Don't forget to set the CatTrapGame.max_depth first!
-            # HINT: If `alpha_beta` is True, call `self.alpha_beta()`. 
-            #       Otherwise, call `self.minimax()`.
-            best_move = None  # Replace with the correct method call.
+            CatTrapGame.max_depth = depth
+            best_move = self.alpha_beta() if alpha_beta else self.minimax()
 
             # Stop exploring deeper levels if the search is terminated (timeout).
             if CatTrapGame.terminated:
                 break
             else:
-                # Great job! You're almost there.
-
-                # TODO: Update `output_move` and `best_depth` based on the result of
-                #       the current depth.
-                # HINT: Ensure `output_move` stores the best move found so far.
-                # HINT: Update `best_depth` to keep track of the deepest level 
-                #       explored successfully.
-
+                best_depth = depth
+                output_move = best_move
                 elapsed_time = (time.time() - CatTrapGame.start_time) * 1000
                 if VERBOSE:
-                    # TODO: Print diagnostic information about the current depth 
-                    #       and elapsed time.
-                    # HINT: Use the `depth` and `elapsed_time` variables.
-                    pass  # Replace with a print statement to show progress.
+                    print("Depth " + str(depth) + " Analyzed.")
+                    print("Total Elapsed Time: " + str(elapsed_time))
+                    print("Best Move: " + str(output_move))
 
                 # Stop exploring deeper levels if the maximum depth was never reached.
                 if not CatTrapGame.reached_max_depth:
                     break
 
         if VERBOSE:
-            # TODO: Print the final depth reached.
-            pass  # Replace this with a print statement for `best_depth`.
+            print("Best Depth: " + str(best_depth))
 
         return output_move
 
