@@ -299,11 +299,6 @@ class CatTrapGame:
            solution in the next folder to unblock yourself without spoiling too
            much of the fun.
         """
-        # TODO: Remove the following 3 lines to enable your depth-limited 
-        #       implementation.
-        if self.max_depth < 10000:
-            self.placeholder_warning()
-            return self.random_cat_move(), 0
 
         if self.time_left() < LAST_CALL_MS:
             CatTrapGame.terminated = True
@@ -318,10 +313,8 @@ class CatTrapGame:
         
         if depth == CatTrapGame.max_depth:
             
-            # TODO: Set the CatTrapGame.reached_max_depth flag.
-
-            # TODO: Call the evaluation function.
-            return self.cat, 0 # Replace with a call to the evaluation function.
+            CatTrapGame.reached_max_depth = True
+            return self.cat, self.evaluation(True)
         
         best_value = float('-inf')
         best_move = legal_moves[0]
@@ -363,10 +356,8 @@ class CatTrapGame:
         
         if depth == CatTrapGame.max_depth:
             
-            # TODO: Set the CatTrapGame.reached_max_depth flag.
-
-            # TODO: Call the evaluation function.
-            return 0 # Replace with a call to the evaluation function.
+            CatTrapGame.reached_max_depth = True
+            return self.evaluation(False)
         
         best_value = float('inf')
 
@@ -396,11 +387,6 @@ class CatTrapGame:
         Calculate the maximum value for the current game state 
         using Alpha-Beta pruning.
         """
-        # TODO: Remove the following 3 lines to enable your depth-limited 
-        #       implementation.
-        if self.max_depth < 10000:
-            self.placeholder_warning()
-            return self.random_cat_move(), 0
         
         if self.time_left() < LAST_CALL_MS:
             CatTrapGame.terminated = True
@@ -415,10 +401,8 @@ class CatTrapGame:
         
         if depth == CatTrapGame.max_depth:
             
-            # TODO: Set the CatTrapGame.reached_max_depth flag.
-
-            # TODO: Call the evaluation function.
-            return self.cat, 0 # Replace with a call to the evaluation function.
+            CatTrapGame.reached_max_depth = True
+            return self.cat, self.evaluation(False)
         
         best_value = float('-inf')
         best_move = legal_moves[0]
@@ -465,10 +449,8 @@ class CatTrapGame:
         
         if depth == CatTrapGame.max_depth:
             
-            # TODO: Set the CatTrapGame.reached_max_depth flag.
-
-            # TODO: Call the evaluation function.
-            return 0 # Replace with a call to the evaluation function.
+            CatTrapGame.reached_max_depth = True
+            return self.evaluation(False)
         
         best_value = float('inf')
 
